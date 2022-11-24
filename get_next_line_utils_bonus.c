@@ -6,7 +6,7 @@
 /*   By: ezanotti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 08:50:35 by ezanotti          #+#    #+#             */
-/*   Updated: 2022/11/24 08:50:40 by ezanotti         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 09:33:04 by ezanotti         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	ft_bzero(void *b, size_t n)
 	i = 0;
 	str = (char *)b;
 	while (n > i)
-	{
-		str[i] = '\0';
-		i++;
-	}
+		str[i++] = '\0';
 }
 
 void	*ft_calloc(size_t count, size_t size)
