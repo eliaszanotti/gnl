@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezanotti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 08:49:17 by ezanotti          #+#    #+#             */
-/*   Updated: 2022/11/24 09:37:48 by ezanotti         ###   ########lyon.fr   */
+/*   Created: 2022/11/24 10:13:45 by ezanotti          #+#    #+#             */
+/*   Updated: 2022/11/24 10:13:51 by ezanotti         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*ft_join_buffer(char *save, char *buffer)
 	char	*new_save;
 
 	new_save = ft_strjoin(save, buffer);
+	if (!new_save)
+		return (free(save), NULL);
 	free(save);
 	return (new_save);
 }
@@ -76,6 +78,8 @@ static char	*ft_read_buffer(char *save, int fd)
 	int		ret;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (free(save), NULL);
 	ret = 1;
 	while (ret && !ft_isnl(save))
 	{
@@ -87,6 +91,8 @@ static char	*ft_read_buffer(char *save, int fd)
 		}
 		buffer[ret] = '\0';
 		save = ft_join_buffer(save, buffer);
+		if (!save)
+			return (free(buffer), NULL);
 	}
 	free(buffer);
 	return (save);
@@ -97,14 +103,18 @@ char	*get_next_line(int fd)
 	static char	*save[OPEN_MAX];
 	char		*line;
 
-	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
+	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 	{
 		if (save[fd])
 			return (free(save[fd]), NULL);
 		return (NULL);
 	}
 	if (!save[fd])
+	{
 		save[fd] = ft_calloc(1, sizeof(char));
+		if (!save[fd])
+			return (NULL);
+	}
 	save[fd] = ft_read_buffer(save[fd], fd);
 	if (!save[fd])
 		return (NULL);
