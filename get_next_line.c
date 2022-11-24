@@ -6,7 +6,7 @@
 /*   By: ezanotti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 08:07:23 by ezanotti          #+#    #+#             */
-/*   Updated: 2022/11/24 09:34:21 by ezanotti         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 10:10:05 by ezanotti         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*ft_join_buffer(char *save, char *buffer)
 	char	*new_save;
 
 	new_save = ft_strjoin(save, buffer);
+	if (!new_save)
+		return (free(save), NULL);
 	free(save);
 	return (new_save);
 }
@@ -76,6 +78,8 @@ static char	*ft_read_buffer(char *save, int fd)
 	int		ret;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (free(save), NULL);
 	ret = 1;
 	while (ret && !ft_isnl(save))
 	{
@@ -87,6 +91,8 @@ static char	*ft_read_buffer(char *save, int fd)
 		}
 		buffer[ret] = '\0';
 		save = ft_join_buffer(save, buffer);
+		if (!save)
+			return (free(buffer), NULL);
 	}
 	free(buffer);
 	return (save);
@@ -104,7 +110,11 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	if (!save)
+	{
 		save = ft_calloc(1, sizeof(char));
+		if (!save)
+			return (NULL);
+	}
 	save = ft_read_buffer(save, fd);
 	if (!save)
 		return (NULL);
