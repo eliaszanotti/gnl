@@ -6,7 +6,7 @@
 /*   By: ezanotti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 08:49:17 by ezanotti          #+#    #+#             */
-/*   Updated: 2022/11/24 08:53:09 by ezanotti         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 09:18:55 by ezanotti         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
+	{
+		if (save[fd])
+			return (free(save[fd]), NULL);
 		return (NULL);
+	}
 	if (!save[fd])
 		save[fd] = ft_calloc(1, sizeof(char));
 	save[fd] = ft_read_buffer(save[fd], fd);
