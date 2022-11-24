@@ -6,7 +6,7 @@
 /*   By: ezanotti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 08:50:11 by ezanotti          #+#    #+#             */
-/*   Updated: 2022/11/24 08:50:58 by ezanotti         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 08:52:03 by ezanotti         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 4096
 # endif
 
 # include <stdlib.h>
